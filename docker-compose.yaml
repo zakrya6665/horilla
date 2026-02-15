@@ -5,27 +5,11 @@ services:
     environment:
       SECRET_KEY: ${HORILLA_SECRET_KEY}
       DATABASE_URL: 'postgres://horilla_app:${HORILLA_DB_PASSWORD}@supabase-db:5432/postgres'
-      HORILLA_DB_PASSWORD: ${HORILLA_DB_PASSWORD}  # ← Expose to container
+      HORILLA_DB_PASSWORD: ${HORILLA_DB_PASSWORD}
       DEBUG: 'false'
       ALLOWED_HOSTS: akcwsc44w0w88co4oswww4og.hexabizsolutions.cloud
       CSRF_TRUSTED_ORIGINS: 'https://akcwsc44w0w88co4oswww4og.hexabizsolutions.cloud'
-    command: >
-      sh -c "
-        /opt/venv/bin/python -c \"
-          import os, psycopg2;
-          psycopg2.connect(
-            host='supabase-db',
-            port=5432,
-            dbname='postgres',
-            user='horilla_app',
-            password=os.environ['HORILLA_DB_PASSWORD']
-          )
-        \" &&
-        echo '✅ DB connected!' &&
-        /opt/venv/bin/python manage.py migrate --noinput &&
-        /opt/venv/bin/python manage.py collectstatic --noinput &&
-        exec /opt/venv/bin/gunicorn horilla.wsgi:application --bind 0.0.0.0:8000 --workers 3 --timeout 120
-      "
+    # ❌ REMOVE THE ENTIRE 'command' BLOCK BELOW
     volumes:
       - ./custom-ui:/app/static/images/ui
     healthcheck:

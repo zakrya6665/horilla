@@ -3,8 +3,8 @@ set -e
 
 echo "Starting Horilla HR..."
 
-# Wait for Supabase PostgreSQL using Python (no external tools needed)
-python << END
+# Use full path to Python in virtual environment
+/opt/venv/bin/python << END
 import os
 import sys
 import time
@@ -38,11 +38,9 @@ print("❌ Failed to connect to Supabase")
 sys.exit(1)
 END
 
-# Run ONLY safe production commands
-python manage.py migrate --noinput          # ← SAFE
-python manage.py collectstatic --noinput    # ← SAFE
-
-# NEVER run: python manage.py makemigrations
+# Run Django commands using venv Python
+/opt/venv/bin/python manage.py migrate --noinput
+/opt/venv/bin/python manage.py collectstatic --noinput
 
 echo "Starting server..."
 exec "$@"

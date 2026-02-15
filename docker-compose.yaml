@@ -3,17 +3,20 @@ services:
     build: .
     restart: unless-stopped
     environment:
-      SECRET_KEY: ${HORILLA_SECRET_KEY}
+      SECRET_KEY: '${HORILLA_SECRET_KEY}'
       DATABASE_URL: 'postgres://horilla_app:${HORILLA_DB_PASSWORD}@supabase-db:5432/postgres'
-      HORILLA_DB_PASSWORD: ${HORILLA_DB_PASSWORD}
+      HORILLA_DB_PASSWORD: '${HORILLA_DB_PASSWORD}'
       DEBUG: 'false'
       ALLOWED_HOSTS: akcwsc44w0w88co4oswww4og.hexabizsolutions.cloud
       CSRF_TRUSTED_ORIGINS: 'https://akcwsc44w0w88co4oswww4og.hexabizsolutions.cloud'
-    # ❌ REMOVE THE ENTIRE 'command' BLOCK BELOW
     volumes:
-      - ./custom-ui:/app/static/images/ui
+      - './custom-ui:/app/static/images/ui'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test:
+        - CMD
+        - curl
+        - '-f'
+        - 'http://localhost:8000/health'
       interval: 30s
       timeout: 10s
       retries: 4

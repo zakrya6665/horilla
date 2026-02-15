@@ -26,19 +26,19 @@ for i in range(max_retries):
             user=parsed.username,
             password=parsed.password,
             database=parsed.path[1:],
-            sslmode='require'
+            sslmode='prefer'  # ← CHANGED FROM 'require'
         )
         conn.close()
-        print("✅ Supabase is ready!")
+        print("✅ Database is ready!")
         sys.exit(0)
     except Exception as e:
-        print(f"⏳ Waiting for Supabase... ({i+1}/{max_retries})")
+        print(f"⏳ Waiting for database... ({i+1}/{max_retries})")
         time.sleep(2)
-print("❌ Failed to connect to Supabase")
+print("❌ Failed to connect to database")
 sys.exit(1)
 END
 
-# Run Django commands using venv Python
+# Run Django commands
 /opt/venv/bin/python manage.py migrate --noinput
 /opt/venv/bin/python manage.py collectstatic --noinput
 

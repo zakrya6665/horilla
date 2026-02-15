@@ -4,7 +4,7 @@ set -e
 echo "Starting Horilla HR..."
 
 # Use full path to Python in virtual environment
-/opt/venv/bin/python << END
+/opt/venv/bin/python << 'EOF'
 import os
 import sys
 import time
@@ -26,7 +26,7 @@ for i in range(max_retries):
             user=parsed.username,
             password=parsed.password,
             database=parsed.path[1:],
-            sslmode='prefer'  # ← CHANGED FROM 'require'
+            sslmode='prefer'
         )
         conn.close()
         print("✅ Database is ready!")
@@ -36,7 +36,7 @@ for i in range(max_retries):
         time.sleep(2)
 print("❌ Failed to connect to database")
 sys.exit(1)
-END
+EOF
 
 # Run Django commands
 /opt/venv/bin/python manage.py migrate --noinput

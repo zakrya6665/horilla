@@ -3,6 +3,7 @@ services:
     build: .
     restart: unless-stopped
     environment:
+      DATABASE_OPTIONS: '{"options": "-c search_path=horilla,public"}'
       SECRET_KEY: '${HORILLA_SECRET_KEY}'
       DATABASE_URL: 'postgres://horilla_app:${HORILLA_DB_PASSWORD}@supabase-db:5432/postgres'
       HORILLA_DB_PASSWORD: '${HORILLA_DB_PASSWORD}'

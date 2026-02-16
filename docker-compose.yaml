@@ -3,9 +3,8 @@ services:
     build: .
     restart: unless-stopped
     environment:
-      DATABASE_OPTIONS: '{"options": "-c search_path=horilla,public"}'
       SECRET_KEY: '${HORILLA_SECRET_KEY}'
-      DATABASE_URL: 'postgres://horilla_app:${HORILLA_DB_PASSWORD}@supabase-db:5432/postgres'
+      DATABASE_URL: "postgres://horilla_app:${HORILLA_DB_PASSWORD}@supabase-db:5432/postgres?options=-c%20search_path%3Dhorilla,public"
       HORILLA_DB_PASSWORD: '${HORILLA_DB_PASSWORD}'
       DEBUG: 'false'
       ALLOWED_HOSTS: akcwsc44w0w88co4oswww4og.hexabizsolutions.cloud
